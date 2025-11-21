@@ -1,0 +1,8 @@
+
+# Load all files onto HPC
+# We recommend cloning the repository to ensure the file structure is the same.
+
+sbatch 03-fit-models-HPC/run-cluster-mod1.sh
+sbatch 03-fit-models-HPC/run-cluster-mod2.sh
+sbatch 03-fit-models-HPC/run-cluster-mod3.sh
+sbatch 03-fit-models-HPC/run-cluster-modU.sh

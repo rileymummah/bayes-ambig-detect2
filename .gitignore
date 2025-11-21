@@ -1,0 +1,19 @@
+.Rproj.user
+.Rhistory
+*.DS_Store
+*.Rapp.history
+*.Rproj
+*.Rmd
+
+
+# folders
+case-study/
+simulation-study/
+
+#output/combined-*.csv
+outfiles/
+output/HPC/
+output/combined-output.csv
+
+# files
+simulation-study/03-fit-models/HPC/UNITY-help.txt
