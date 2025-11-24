@@ -102,7 +102,7 @@ ggsave(paste0('fig2-',Sys.Date(),'.png'),
 output %>%
   mutate(coverage = q97.5 > true.mean & true.mean > q2.5,
          parameter = factor(parameter,
-                            levels = c('p10','p100','p101','p11','p111',
+                            levels = c('p01','p001','p101','p11','p111',
                                        'theta11','psi'))) %>%
   filter(parameter != 'deviance') %>%
   group_by(model.flag, nsites, nindiv, ntests, parameter) %>%
@@ -111,8 +111,8 @@ output %>%
              shape=model.flag)) +
   geom_point(position = position_dodge(0.85), size = 2.5, alpha = 0.7) +
   facet_grid(ntests ~ nsites + nindiv) +
-  scale_x_discrete(labels = c(expression('False positive ('*p[10]*')'),
-                              expression('False positive ('*p[100]*')'),
+  scale_x_discrete(labels = c(expression('False positive ('*p[01]*')'),
+                              expression('False positive ('*p[001]*')'),
                               expression('False positive ('*p[101]*')'),
                               expression('True positive ('*p[11]*')'),
                               expression('True positive ('*p[111]*')'),
@@ -144,7 +144,7 @@ ggsave(paste0('figS1-',Sys.Date(),'.png'),
 # Figure S2 ---------------------------------------------------------------
 output %>%
   mutate(parameter = factor(parameter,
-                            levels = c('p10','p100','p101','p11','p111',
+                            levels = c('p01','p001','p101','p11','p111',
                                        'theta11','psi')),
          converge = ifelse(Rhat < 1.1, 1, 0)) %>%
   filter(parameter != 'deviance') %>% 
@@ -154,8 +154,8 @@ output %>%
              shape=model.flag)) +
   geom_point(position = position_dodge(0.85), size = 2.5, alpha = 0.7) +
   facet_grid(ntests ~ nsites + nindiv) +
-  scale_x_discrete(labels = c(expression('False positive ('*p[10]*')'),
-                              expression('False positive ('*p[100]*')'),
+  scale_x_discrete(labels = c(expression('False positive ('*p[01]*')'),
+                              expression('False positive ('*p[001]*')'),
                               expression('False positive ('*p[101]*')'),
                               expression('True positive ('*p[11]*')'),
                               expression('True positive ('*p[111]*')'),

@@ -89,12 +89,12 @@ modelU <- function(i, input.data, param.combos, flag) {
                             psi = runif(1,0,1),
                             theta11 = runif(1,0,1),
                             p111 = runif(1,0.5,1),
-                            p100 = runif(1,0.5,1),
-                            p000 = runif(1,0.5,1))
+                            p101 = runif(1,0.5,1),
+                            p001 = runif(1,0.5,1))
   }
 
   # Parameters to store
-  params <- c("psi", "theta11", "p111", "p100", "p000")
+  params <- c("psi", "theta11", "p111", "p101", "p001")
 
   print(paste0('ModelU-',flag,': Run ',i))
 
@@ -118,12 +118,12 @@ modelU <- function(i, input.data, param.combos, flag) {
   bind_cols(dataset = paste0('dataset',i),
             model = 'modelU',
             flag = flag,
-            parameter = c('psi','theta11','p111','p100','p000','deviance'),
+            parameter = c('psi','theta11','p111','p101','p001','deviance'),
             true.mean = c(param.combos$psi[i],
                           param.combos$theta11[i],
                           param.combos$p111[i],
-                          param.combos$p100[i],
-                          param.combos$p000[i],
+                          param.combos$p101[i],
+                          param.combos$p001[i],
                           NA),
             out$summary) %>%
   mutate(runtime = time,
