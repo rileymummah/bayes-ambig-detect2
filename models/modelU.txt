@@ -6,8 +6,8 @@
   psi ~ dunif(0,1)
   theta11 ~ dunif(0,1)
   p111 ~ dunif(0.5,1)
-  p100 ~ dunif(0.5,1)
-  p000 ~ dunif(0.5,1)
+  p101 ~ dunif(0, 0.5)
+  p001 ~ dunif(0, 0.5)
   
   # Likelihood
   for (i in 1:nsites) {
@@ -25,19 +25,19 @@
       
       # Define probabilities
       pi[i,j,1] <- z[i]*w[i,j]*(p111*(1-delta) + (1-p111)*r) + 
-                  z[i]*(1-w[i,j])*((1-p100)*(1-delta) + p100*r) + 
+                  z[i]*(1-w[i,j])*((1-p101)*(1-delta) + p101*r) + 
                   (1-z[i])*w[i,j]*(p011*(1-delta) + (1-p011)*r) + 
-                  (1-z[i])*(1-w[i,j])*((1-p000)*(1-delta) + p000*r)
+                  (1-z[i])*(1-w[i,j])*((1-p001)*(1-delta) + p001*r)
                   
       pi[i,j,2] <- z[i]*w[i,j]*(p111*delta + (1-p111)*(1-r)) + 
-                  z[i]*(1-w[i,j])*((1-p100)*delta + p100*(1-r)) + 
+                  z[i]*(1-w[i,j])*((1-p101)*delta + p101*(1-r)) + 
                   (1-z[i])*w[i,j]*(p011*delta + (1-p011)*(1-r)) + 
-                  (1-z[i])*(1-w[i,j])*((1-p000)*delta + p000*(1-r))
+                  (1-z[i])*(1-w[i,j])*((1-p001)*delta + p001*(1-r))
       
       pi[i,j,3] <- z[i]*w[i,j]*(p111*(1-delta) + (1-p111)*(1-r)) + 
-                  z[i]*(1-w[i,j])*((1-p100)*(1-delta) + p100*(1-r)) + 
+                  z[i]*(1-w[i,j])*((1-p101)*(1-delta) + p101*(1-r)) + 
                   (1-z[i])*w[i,j]*(p011*(1-delta) + (1-p011)*(1-r)) + 
-                  (1-z[i])*(1-w[i,j])*((1-p000)*(1-delta) + p000*(1-r))
+                  (1-z[i])*(1-w[i,j])*((1-p001)*(1-delta) + p001*(1-r))
       
     } #j 
   } #i

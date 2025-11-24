@@ -25,7 +25,7 @@
 module load jags cray-R
 
 ## Set the name of the R script to run, and the directory in which to save outputs
-script=/caldera/hovenweep/projects/usgs/ecosystems/eesc/rmummah/bayes-ambig-detect/03-fit-models-HPC/run-cluster-mod1.R
+script=/caldera/hovenweep/projects/usgs/ecosystems/eesc/rmummah/bayes-ambig-detect2/03-fit-models-HPC/run-cluster-mod1.R
 
 
 # run your script:

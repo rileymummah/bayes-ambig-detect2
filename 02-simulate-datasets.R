@@ -38,8 +38,8 @@ for (i in 1:nrow(param.combos)) {
                                 theta11 = param.combos$theta11[i],
                                 theta01 = theta01,
                                 p111 = param.combos$p111[i],
-                                p100 = param.combos$p100[i],
-                                p000 = param.combos$p000[i],
+                                p101 = param.combos$p101[i],
+                                p001 = param.combos$p001[i],
                                 p011 = p011,
                                 delta = delta,
                                 r = r)
