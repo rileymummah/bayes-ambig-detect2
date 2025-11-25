@@ -89,8 +89,8 @@ modelU <- function(i, input.data, param.combos, flag) {
                             psi = runif(1,0,1),
                             theta11 = runif(1,0,1),
                             p111 = runif(1,0.5,1),
-                            p101 = runif(1,0.5,1),
-                            p001 = runif(1,0.5,1))
+                            p101 = runif(1,0,0.25),
+                            p001 = runif(1,0,0.25))
   }
 
   # Parameters to store
