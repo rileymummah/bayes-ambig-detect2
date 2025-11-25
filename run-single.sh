@@ -24,7 +24,7 @@
 module load jags cray-R
 
 ## Set the name of the R script to run, and the directory in which to save outputs
-script=/caldera/hovenweep/projects/usgs/ecosystems/eesc/rmummah/bayes-ambig-detect/run-single.R
+script=/caldera/hovenweep/projects/usgs/ecosystems/eesc/rmummah/bayes-ambig-detect2/run-single.R
 
 mod=$1
 iter=$2
