@@ -25,7 +25,7 @@ library(stringr)
 
 ## load data ---------------------------
 # List of models and flags (missing from simulation output)
-models <- c('model2','model3')#'model1',
+models <- c('model1','model2','model3')
 
 param.combos <- read.csv('data/parameter_combos.csv') %>%
                 rownames_to_column() # Necessary for subsequent code
@@ -33,7 +33,7 @@ param.combos <- read.csv('data/parameter_combos.csv') %>%
 ## Combine datasets ---------------------------
 
 # Read in initial dataset
-data <- read.csv('output/combined-model1.csv', header=T) %>% #ModelU
+data <- read.csv('output/combined-modelU.csv', header=T) %>% #ModelU
         filter(dataset != 'dataset')
 
 # Add subsequent datasets to file; adding flag for data manipulation
