@@ -22,7 +22,7 @@
     
     for (j in 1:nindiv) {
       # Ecological model for true prevalence
-      w[i,j] <- ifelse(z[i] == 0, 0, dbern(z[i]*theta11)
+      w[i,j] <- ifelse(z[i] == 0, 0, dbern(z[i]*theta11))
       
       ## Observation model
       # Define probabilities
