@@ -23,12 +23,12 @@ sim.datasets <- readRDS('data/sim.datasets.rds')
 iter = as.numeric(args[1])
 
 out <- modelU(iter, input.data = sim.datasets, param.combos = params, flag = 'U')
-write.csv(out, file=paste0('output/HPC/modelU-',flag,'-',iter,'.csv'), row.names = F)
+write.csv(out, file=paste0('output/HPC/modelU-U-',iter,'.csv'), row.names = F)
 
 # Run again for next iteration
 iter = iter + 6000
 
 out <- modelU(iter, input.data = sim.datasets, param.combos = params, flag = 'U')
-write.csv(out, file=paste0('output/HPC/modelU-',flag,'-',iter,'.csv'), row.names = F)
+write.csv(out, file=paste0('output/HPC/modelU-U-',iter,'.csv'), row.names = F)
 
 #End script
