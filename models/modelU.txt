@@ -18,11 +18,12 @@
   for (i in 1:nsites) {
     # Ecological model for true occurrence
     z[i] ~ dbern(psi)
-    p1[i] ~ dbern(z[i]*theta11) # if z = 1
           
     for (j in 1:nindiv) {
       # Ecological model for true prevalence
-      w[i,j] <- ifelse(z[i] == 0, 0, p1[i])
+      p1[i,j] ~ dbern(z[i]*theta11) # if z = 1
+      
+      w[i,j] <- ifelse(z[i] == 0, 0, p1[i,j])
       
       ## Observation model
       # Define probabilities
