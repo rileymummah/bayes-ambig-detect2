@@ -7,7 +7,7 @@
   theta11 ~ dunif(0,1)
   b1 ~ dunif(delta,1)
   b2 ~ dunif(0, 1)
-  b3 ~ dunif(0, b2)
+  b3 ~ dunif(0, 1)
 
   # Derived
   p111 <- delta/b1
