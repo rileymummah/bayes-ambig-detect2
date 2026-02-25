@@ -24,10 +24,7 @@
       # Ecological model for true prevalence
       w[i,j] <- ifelse(z[i] == 0, 0, dbern(z[i]*theta11)
       
-      # Observation model
-      # Sample detection state from categorical distribution
-      y[i,j,] ~ dmulti(pi[i,j,1:3], ntests) #y=[0,1,U]
-      
+      ## Observation model
       # Define probabilities
       # P(Y = 0)
       pi[i,j,1] <- z[i]*w[i,j]*(1-p111) +
@@ -41,8 +38,11 @@
       
       # P(Y = U)
       pi[i,j,3] <- z[i]*w[i,j]*(1-b1)*p111 + 
-                   z[i]*(1-w[i,j])*(1-b2)*(p101) + 
+                   z[i]*(1-w[i,j])*(1-b2)*p101 + 
                    (1-z[i])*(1-w[i,j])*(1-b3)*p001
+                   
+      # Sample detection state from categorical distribution
+      y[i,j,1:3] ~ dmulti(pi[i,j,1:3], ntests) #y=[0,1,U]
       
     } #j 
   } #i
