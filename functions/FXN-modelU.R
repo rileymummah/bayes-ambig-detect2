@@ -51,17 +51,17 @@ modelU <- function(i, input.data, param.combos, flag) {
   zinit[zinit > 0] <- 1
 
   # Take max value across surveys for each site and year combo
-  winit <- apply(data$y, c(1, 2), max, na.rm = TRUE)
-  winit[winit > 0] <- 1
+  # winit <- apply(data$y, c(1, 2), max, na.rm = TRUE)
+  # winit[winit > 0] <- 1
 
   # Initial conditions for latent state z, latent state w, and parameters
   inits <- function() {list(z = zinit,
-                            w = winit,
+                            # w = winit,
                             psi = runif(1,0,1),
                             theta11 = runif(1,0,1),
                             b1 = runif(1,x$delta,1),
                             b2 = runif(1,0,1),
-                            b3 = runif(1,0,b2))
+                            b3 = runif(1,0,1))
   }
 
   # Parameters to store
@@ -89,12 +89,12 @@ modelU <- function(i, input.data, param.combos, flag) {
   bind_cols(dataset = paste0('dataset',i),
             model = 'modelU',
             flag = flag,
-            parameter = c('psi','theta11','p111','p101','p001','deviance'),
+            parameter = c('psi','theta11','b1','b2','b3','deviance'),
             true.mean = c(param.combos$psi[i],
                           param.combos$theta11[i],
-                          param.combos$p111[i],
-                          param.combos$p101[i],
-                          param.combos$p001[i],
+                          param.combos$b1[i],
+                          param.combos$b2[i],
+                          param.combos$b3[i],
                           NA),
             out$summary) %>%
   mutate(runtime = time,
