@@ -5,44 +5,47 @@
   # Uninformative
   psi ~ dunif(0,1)
   theta11 ~ dunif(0,1)
-  p111 ~ dunif(0.5,1)
-  p101 ~ dunif(0, 0.5)
-  p001 ~ dunif(0, 0.5)
+  b1 ~ dunif(delta,1)
+  b2 ~ dunif(0, 1)
+  b3 ~ dunif(0, b2)
+
+  # Derived
+  p111 <- delta/b1
+  p101 <- 1-r
+  p001 <- 1-r
   
   # Likelihood
   for (i in 1:nsites) {
     # Ecological model for true occurrence
     z[i] ~ dbern(psi) 
-    p.eff[i] <- z[i] * theta11 + (1-z[i]) * theta01
+    #p.eff[i] <- z[i] * theta11 + (1-z[i]) * theta01
     
     for (j in 1:nindiv) {
       # Ecological model for true prevalence
-      w[i,j] ~ dbern(p.eff[i])
+      w[i,j] <- ifelse(z[i] == 0, 0, dbern(z[i]*theta11)
       
       # Observation model
       # Sample detection state from categorical distribution
       y[i,j,] ~ dmulti(pi[i,j,1:3], ntests) #y=[0,1,U]
       
       # Define probabilities
-      pi[i,j,1] <- z[i]*w[i,j]*(p111*(1-delta) + (1-p111)*r) + 
-                  z[i]*(1-w[i,j])*((1-p101)*(1-delta) + p101*r) + 
-                  (1-z[i])*w[i,j]*(p011*(1-delta) + (1-p011)*r) + 
-                  (1-z[i])*(1-w[i,j])*((1-p001)*(1-delta) + p001*r)
-                  
-      pi[i,j,2] <- z[i]*w[i,j]*(p111*delta + (1-p111)*(1-r)) + 
-                  z[i]*(1-w[i,j])*((1-p101)*delta + p101*(1-r)) + 
-                  (1-z[i])*w[i,j]*(p011*delta + (1-p011)*(1-r)) + 
-                  (1-z[i])*(1-w[i,j])*((1-p001)*delta + p001*(1-r))
+      # P(Y = 0)
+      pi[i,j,1] <- z[i]*w[i,j]*(1-p111) +
+                   z[i]*(1-w[i,j])*(1-p101) + 
+                   (1-z[i])*(1-w[i,j])*(1-p001)
       
-      pi[i,j,3] <- z[i]*w[i,j]*(p111*(1-delta) + (1-p111)*(1-r)) + 
-                  z[i]*(1-w[i,j])*((1-p101)*(1-delta) + p101*(1-r)) + 
-                  (1-z[i])*w[i,j]*(p011*(1-delta) + (1-p011)*(1-r)) + 
-                  (1-z[i])*(1-w[i,j])*((1-p001)*(1-delta) + p001*(1-r))
+      # P(Y = 1)            
+      pi[i,j,2] <- z[i]*w[i,j]*b1*p111 + 
+                   z[i]*(1-w[i,j])*b2*p101 +
+                   (1-z[i])*(1-w[i,j])*b3*p001
+      
+      # P(Y = U)
+      pi[i,j,3] <- z[i]*w[i,j]*(1-b1)*p111 + 
+                   z[i]*(1-w[i,j])*(1-b2)*(p101) + 
+                   (1-z[i])*(1-w[i,j])*(1-b3)*p001
       
     } #j 
   } #i
   
-  # Derived quantities
-  #occ.fs <- sum(z[])
-  }
+} # model
   

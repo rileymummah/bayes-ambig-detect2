@@ -16,6 +16,11 @@ library(tidyverse)
 # Set seed for reproducible code
 set.seed(22920)
 
+# Fixed parameters
+theta00 <- 1
+delta <- 0.95 # sensitivity
+r <- 0.999 # specificity ~ 1
+
 
 # Set up information for sampler -----------------------------------------------
 
@@ -36,7 +41,7 @@ lhs_raw <- randomLHS(n = n_samples, # Number of rows / samples
 
 # Initialize data frame --------------------------------------------------------
 param_combos <- setNames(data.frame(matrix(ncol = n_params, nrow = n_samples)),
-                         c('psi', 'theta11', 'p111', 'p101', 'p001'))
+                         c('psi', 'theta11', 'b1', 'b2', 'b3'))
 
 # head(param_combos)
 
@@ -47,9 +52,12 @@ param_combos <- setNames(data.frame(matrix(ncol = n_params, nrow = n_samples)),
 param_combos <- param_combos %>%
                   mutate(psi = qunif(lhs_raw[, 1], min = 0, max = 1),
                          theta11 = qunif(lhs_raw[, 2], min = 0, max = 1),
-                         p111 = qunif(lhs_raw[, 3], min = 0.5, max = 1),
-                         p101 = qunif(lhs_raw[, 4], min = 0, max = 0.25), # p111 > p101
-                         p001 = qunif(lhs_raw[, 5], min = 0, max = p101)) # p101 >= p001
+                         theta00 = theta00,
+                         b1 = qunif(lhs_raw[, 3], min = delta, max = 1),
+                         b2 = qunif(lhs_raw[, 4], min = 0, max = 1), 
+                         b3 = qunif(lhs_raw[, 5], min = 0, max = b2), # b2 >= b3
+                         delta = delta,
+                         r = r)
 
 # head(param_combos)
 

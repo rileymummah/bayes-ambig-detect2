@@ -41,37 +41,8 @@ modelU <- function(i, input.data, param.combos, flag) {
                nsites = x$nsites,
                nindiv = x$nindiv,
                ntests = x$ntests,
-               delta = x$delta, r = x$r, # Usually provided by diagnostic lab
-               theta01 = x$theta01, p011 = x$p011) # Assumed to be 0
-  # } else if (flag == 'noU') {
-  #   x$y[,,3] <- 0 # Remove Us
-  #   
-  #   data <- list(y = x$y,
-  #                nsites = x$nsites,
-  #                nindiv = x$nindiv,
-  #                ntests = x$ntests, # Non-detections + Detections
-  #                delta = x$delta, r = x$r, # Usually provided by diagnostic lab
-  #                theta01 = x$theta01, p011 = x$p011) # Assumed to be 0
-  } else if(flag == 'ND') {
-    x$y[,,1] <- x$y[,,1] + x$y[,,3] # Add Us to NDs
-    x$y[,,3] <- 0
-    
-    data <- list(y = x$y, 
-                 nsites = x$nsites,
-                 nindiv = x$nindiv,
-                 ntests = x$ntests,
-                 delta = x$delta, r = x$r, # Usually provided by diagnostic lab
-                 theta01 = x$theta01, p011 = x$p011) # Assumed to be 0
-  } else if (flag == 'D') {
-    x$y[,,2] <- x$y[,,2] + x$y[,,3] # Add Us to Ds
-    x$y[,,3] <- 0
-    
-    data <- list(y = x$y,
-                 nsites = x$nsites,
-                 nindiv = x$nindiv,
-                 ntests = x$ntests,
-                 delta = x$delta, r = x$r, # Usually provided by diagnostic lab
-                 theta01 = x$theta01, p011 = x$p011) # Assumed to be 0
+               # delta/r usually provided by diagnostic lab
+               delta = x$delta, r = x$r) 
   }
 
   # Initial values
@@ -88,13 +59,13 @@ modelU <- function(i, input.data, param.combos, flag) {
                             w = winit,
                             psi = runif(1,0,1),
                             theta11 = runif(1,0,1),
-                            p111 = runif(1,0.5,1),
-                            p101 = runif(1,0,0.25),
-                            p001 = runif(1,0,0.25))
+                            b1 = runif(1,x$delta,1),
+                            b2 = runif(1,0,1),
+                            b3 = runif(1,0,b2))
   }
 
   # Parameters to store
-  params <- c("psi", "theta11", "p111", "p101", "p001")
+  params <- c("psi", "theta11", "b1", "b2", "b3")
 
   print(paste0('ModelU-',flag,': Run ',i))
 

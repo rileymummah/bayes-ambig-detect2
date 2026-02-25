@@ -21,11 +21,6 @@ source('functions/FXN-sim-data.R')
 # Load LHS parameters ---------------------------
 param.combos <- read.csv('data/parameter_combos.csv')
 
-# Fixed parameters
-theta01 <- 0
-p011 <- 1
-delta <- 0.95 # sensitivity
-r <- 0.999 # specificity ~ 1
 
 sim.datasets <- list()
 
@@ -36,13 +31,12 @@ for (i in 1:nrow(param.combos)) {
                                 ntests = param.combos$ntests[i],
                                 psi = param.combos$psi[i],
                                 theta11 = param.combos$theta11[i],
-                                theta01 = theta01,
-                                p111 = param.combos$p111[i],
-                                p101 = param.combos$p101[i],
-                                p001 = param.combos$p001[i],
-                                p011 = p011,
-                                delta = delta,
-                                r = r)
+                                theta00 = param.combos$theta00[i],
+                                b1 = param.combos$b1[i],
+                                b2 = param.combos$b2[i],
+                                b3 = param.combos$b3[i],
+                                delta = param.combos$delta[i],
+                                r = param.combos$r[i])
   print(i) # To see what dataset was generated
 }
 
