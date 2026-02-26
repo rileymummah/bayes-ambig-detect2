@@ -1,10 +1,4 @@
 ## ---------------------------
-## This code was written by: r.o. mummah
-## For questions: rmummah@umass.edu
-## Date Created: 2023-03-01
-## ---------------------------
-
-## ---------------------------
 ## Objective:
 ##
 ##
@@ -40,27 +34,21 @@ model3 <- function(i, input.data, param.combos, flag) {
                  nsites = x$nsites,
                  nindiv = x$nindiv,
                  ntests = x$y[,,1] + x$y[,,2], # Non-detections + Detections
-                 delta = x$delta,
-                 r = x$r,
-                 theta01 = x$theta01) # Assumed to be 0
+                 delta = x$delta, r = x$r)
   } else if(flag == 'ND') {
     # Make Us 0
     data <- list(y = x$y[,,2], # Detections only
                  nsites = x$nsites,
                  nindiv = x$nindiv,
                  ntests = matrix(x$ntests, nrow = x$nsites, ncol = x$nindiv),
-                 delta = x$delta,
-                 r = x$r,
-                 theta01 = x$theta01) # Assumed to be 0
+                 delta = x$delta, r = x$r)
   } else if (flag == 'D') {
     # Make Us 1
     data <- list(y = x$y[,,2] + x$y[,,3], # Detections and uncertain detections
                  nsites = x$nsites,
                  nindiv = x$nindiv,
                  ntests = matrix(x$ntests, nrow = x$nsites, ncol = x$nindiv),
-                 delta = x$delta,
-                 r = x$r,
-                 theta01 = x$theta01) # Assumed to be 0
+                 delta = x$delta, r = x$r)
   }
 
   # Initial values
@@ -69,13 +57,13 @@ model3 <- function(i, input.data, param.combos, flag) {
   zinit[zinit > 0] <- 1
 
   # Take max value across surveys for each site and year combo
-  winit <- apply(data$y, c(1, 2), max, na.rm = TRUE)
-  winit[winit > 0] <- 1
+  # winit <- apply(data$y, c(1, 2), max, na.rm = TRUE)
+  # winit[winit > 0] <- 1
 
 
   # Initial conditions for latent state z, latent state w, and parameters
   inits <- function() {list(z = zinit,
-                            w = winit,
+                            # w = winit,
                             psi = runif(1,0,1),
                             theta11 = runif(1,0,1))
   }
