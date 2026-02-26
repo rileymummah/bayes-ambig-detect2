@@ -1,8 +1,3 @@
-## ---------------------------
-## This code was written by: r.o. mummah
-## For questions: rmummah@umass.edu
-## Date Created: 2023-03-01
-## ---------------------------
 
 ## ---------------------------
 ## Objective:
@@ -38,22 +33,19 @@ model2 <- function(i, input.data, param.combos, flag) {
     data <- list(y = x$y[,,2], # Detections only
                  nsites = x$nsites,
                  nindiv = x$nindiv,
-                 ntests = x$y[,,1] + x$y[,,2], # Non-detections + Detections
-                 theta01 = x$theta01) # Assumed to be 0
+                 ntests = x$y[,,1] + x$y[,,2]) # Non-detections + Detections
   } else if(flag == 'ND') {
     # Make Us 0
     data <- list(y = x$y[,,2], # Detections only
                  nsites = x$nsites,
                  nindiv = x$nindiv,
-                 ntests = matrix(x$ntests, nrow = x$nsites, ncol = x$nindiv),
-                 theta01 = x$theta01) # Assumed to be 0
+                 ntests = matrix(x$ntests, nrow = x$nsites, ncol = x$nindiv))
   } else if (flag == 'D') {
     # Make Us 1
     data <- list(y = x$y[,,2] + x$y[,,3], # Detections and uncertain detections
                  nsites = x$nsites,
                  nindiv = x$nindiv,
-                 ntests = matrix(x$ntests, nrow = x$nsites, ncol = x$nindiv),
-                 theta01 = x$theta01) # Assumed to be 0
+                 ntests = matrix(x$ntests, nrow = x$nsites, ncol = x$nindiv))
   }
 
   # Initial values
@@ -62,13 +54,13 @@ model2 <- function(i, input.data, param.combos, flag) {
   zinit[zinit > 0] <- 1
 
   # Take max value across surveys for each site and year combo
-  winit <- apply(data$y, c(1, 2), max, na.rm = TRUE)
-  winit[winit > 0] <- 1
+  # winit <- apply(data$y, c(1, 2), max, na.rm = TRUE)
+  # winit[winit > 0] <- 1
 
 
   # Initial conditions for latent state z, latent state w, and parameters
   inits <- function() {list(z = zinit,
-                            w = winit,
+                            # w = winit,
                             psi = runif(1,0,1),
                             theta11 = runif(1,0,1),
                             p11 = runif(1,0.5,1),
@@ -102,8 +94,8 @@ model2 <- function(i, input.data, param.combos, flag) {
             parameter = c('psi','theta11','p11','p01','deviance'),
             true.mean = c(param.combos$psi[i],
                           param.combos$theta11[i],
-                          param.combos$p111[i],
-                          param.combos$p101[i],
+                          param.combos$delta[i],
+                          param.combos$r[i],
                           NA),
             out$summary) %>%
     mutate(runtime = time,

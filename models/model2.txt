@@ -6,17 +6,18 @@
   psi ~ dunif(0,1)
   theta11 ~ dunif(0,1)
   p11 ~ dunif(0.5,1)
-  p01 ~ dunif(0,0.25)
+  p01 ~ dunif(0,0.5)
   
   # Likelihood
   for (i in 1:nsites) {
     # Ecological model for true occurrence
-    z[i] ~ dbern(psi) 
-    p.eff[i] <- z[i] * theta11 + (1-z[i]) * theta01
+    z[i] ~ dbern(psi)
     
     for (j in 1:nindiv) {
       # Ecological model for true prevalence
-      w[i,j] ~ dbern(p.eff[i])
+      p1[i,j] ~ dbern(z[i]*theta11) # if z = 1
+      
+      w[i,j] <- ifelse(z[i] == 0, 0, p1[i,j])
       
       # Observation model
       # Sample detection state from categorical distribution
@@ -28,5 +29,5 @@
     } #j 
   } #i
 
-  }
+}
   
