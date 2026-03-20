@@ -1,6 +1,6 @@
 
 ## ---------------------------
-## Objective: To use a Latin hyper cube sampler to evenly sample distributions
+## Objective: To use a Latin hypercube sampler to evenly sample distributions
 ## for parameter combinations used in simulations
 ##
 ## Input: N/A
@@ -17,7 +17,7 @@ library(tidyverse)
 set.seed(22920)
 
 # Fixed parameters
-theta00 <- 1
+theta01 <- 0
 delta <- 0.95 # sensitivity
 r <- 0.999 # specificity ~ 1
 
@@ -52,7 +52,7 @@ param_combos <- setNames(data.frame(matrix(ncol = n_params, nrow = n_samples)),
 param_combos <- param_combos %>%
                   mutate(psi = qunif(lhs_raw[, 1], min = 0, max = 1),
                          theta11 = qunif(lhs_raw[, 2], min = 0, max = 1),
-                         theta00 = theta00,
+                         theta01 = theta01,
                          b1 = qunif(lhs_raw[, 3], min = delta, max = 1),
                          b2 = qunif(lhs_raw[, 4], min = 0, max = 1), 
                          b3 = qunif(lhs_raw[, 5], min = 0, max = b2), # b2 >= b3
