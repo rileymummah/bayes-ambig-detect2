@@ -23,7 +23,7 @@
 	    y[i,j] ~ dbinom(pi[i,j], ntests[i,j])
       
       # Define probabilities [0,1,U]
-      pi[i,j] <- w[i,j]*delta + (1-w[i,j])*(1-r)
+      pi[i,j] <- z[i]*w[i,j]*delta + z[i]*(1-w[i,j])*(1-r) + (1-z[i])*(1-w[i,j])*(1-r)
       
     } #j 
   } #i

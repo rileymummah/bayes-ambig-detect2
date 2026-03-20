@@ -23,8 +23,8 @@
       # Sample detection state from categorical distribution
   	  y[i,j] ~ dbinom(pi[i,j], ntests[i,j])
       
-      # Define probabilities [0,1]
-      pi[i,j] <- w[i,j]*p11 + (1-w[i,j])*p01
+      # Define probability of detection
+      pi[i,j] <- z[i]*w[i,j]*p11 + z[i]*(1-w[i,j])*p01 + (1-z[i])*(1-w[i,j])*p01
       
     } #j 
   } #i

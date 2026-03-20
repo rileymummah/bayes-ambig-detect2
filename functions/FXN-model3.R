@@ -63,7 +63,6 @@ model3 <- function(i, input.data, param.combos, flag) {
 
   # Initial conditions for latent state z, latent state w, and parameters
   inits <- function() {list(z = zinit,
-                            # w = winit,
                             psi = runif(1,0,1),
                             theta11 = runif(1,0,1))
   }
