@@ -9,7 +9,7 @@
 #SBATCH --account=eesc
 #SBATCH --time=2-00:00:00 # Job time limit: days-hours:minutes:seconds
 #SBATCH --mail-user=rmummah@usgs.gov
-#SBATCH --mail-type=START,END,FAIL
+#SBATCH --mail-type=END,FAIL
 #SBATCH -o outfiles/singlerun-%j.out
 #SBATCH -e outfiles/singlerun-%j.err
 
