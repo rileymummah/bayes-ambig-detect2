@@ -54,7 +54,7 @@ table(data$model, data$flag)
 
 # # Check that each model has the correct number of entries
 # # ModelU should have 5 parameter x adjustment combos
-# # Model1 should have 15 parameter x adjustment combos
+# # Model1 should have 9 parameter x adjustment combos
 # # Model2 should have 12 parameter x adjustment combos
 # # Model3 should have 6 parameter x adjustment combos
 table(data$dataset, data$model) %>%
