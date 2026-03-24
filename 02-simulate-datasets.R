@@ -32,7 +32,7 @@ for (i in 1:nrow(param.combos)) {
                                 psi = param.combos$psi[i],
                                 theta11 = param.combos$theta11[i],
                                 theta01 = param.combos$theta01[i],
-                                b1 = param.combos$b1[i],
+                                p111 = param.combos$p111[i],
                                 b2 = param.combos$b2[i],
                                 b3 = param.combos$b3[i],
                                 delta = param.combos$delta[i],
