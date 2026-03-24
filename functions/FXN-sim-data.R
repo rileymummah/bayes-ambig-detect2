@@ -29,7 +29,7 @@
 
 sim.data <- function(nsites, nindiv, ntests,
                      psi, theta11, theta01, 
-                     b1, b2, b3,
+                     p111, b2, b3,
                      r, delta) {
   # Create dataset storage
   w <- matrix(NA, nrow = nsites, ncol = nindiv)
@@ -37,7 +37,7 @@ sim.data <- function(nsites, nindiv, ntests,
   p <- array(NA, c(nsites, nindiv, 3)) # Store detection prob vector
   
   # Derived parameters
-  p111 <- delta/b1
+  b1 <- delta/p111
   p101 <- 1-r
   p001 <- 1-r
   
@@ -84,6 +84,6 @@ sim.data <- function(nsites, nindiv, ntests,
   return(list(z = z, w = w, y = y, p = p,
               nsites = nsites, nindiv = nindiv, ntests = ntests,
               psi = psi, theta11 = theta11, theta01 = theta01, 
-              b1 = b1, b2 = b2, b3 = b3,
+              p111 = p111, b2 = b2, b3 = b3,
               delta = delta, r = r))
 }

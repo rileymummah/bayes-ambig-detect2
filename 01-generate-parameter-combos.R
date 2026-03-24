@@ -41,7 +41,7 @@ lhs_raw <- randomLHS(n = n_samples, # Number of rows / samples
 
 # Initialize data frame --------------------------------------------------------
 param_combos <- setNames(data.frame(matrix(ncol = n_params, nrow = n_samples)),
-                         c('psi', 'theta11', 'b1', 'b2', 'b3'))
+                         c('psi', 'theta11', 'p111', 'p101', 'p001'))
 
 # head(param_combos)
 
@@ -53,9 +53,9 @@ param_combos <- param_combos %>%
                   mutate(psi = qunif(lhs_raw[, 1], min = 0, max = 1),
                          theta11 = qunif(lhs_raw[, 2], min = 0, max = 1),
                          theta01 = theta01,
-                         b1 = qunif(lhs_raw[, 3], min = delta, max = 1),
+                         p111 = qunif(lhs_raw[, 3], min = delta, max = 1),
                          b2 = qunif(lhs_raw[, 4], min = 0, max = 1), 
-                         b3 = qunif(lhs_raw[, 5], min = 0, max = b2), # b2 >= b3
+                         b3 = qunif(lhs_raw[, 5], min = 0, max = 1), 
                          delta = delta,
                          r = r)
 
