@@ -3,7 +3,7 @@ datasets <- seq(1:12000)
 
 # Check by model
 data %>%
-  filter(model == 'model3') %>% 
+  filter(model == 'model2') %>% 
   mutate(num = str_remove(dataset, 'dataset')) %>% 
   select(num, flag) -> mod
 
@@ -16,10 +16,10 @@ data %>%
 mod %>%
   group_by(num) %>%
   summarize(n=n()) %>%
-  filter(n < 6) # Change number to match model
+  filter(n < 5) # Change number to match model
 
 # If partial runs exist
-filter(mod, num %in% c(10888, 3151, 5121, 8344, 8832))
+filter(mod, num %in% c(3381))
 
 # Fully missing
 datasets[!(datasets %in% mod$num)]
