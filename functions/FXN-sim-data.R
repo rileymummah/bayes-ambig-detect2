@@ -10,7 +10,7 @@
 #   psi = true site occupancy
 #   theta11 = true site prevalence
 #   theta01 =  contamination rate (assumed not to occur)
-#   b1 = classification probability | pathogen at site & individual
+#   p111 = detection probability | pathogen at site & individual
 #   b2 = classification probability | pathogen at site but not individual
 #   b3 = classification probability | pathogen not at site & individual
 #   delta = diagnostic test sensitivity

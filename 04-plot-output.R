@@ -37,8 +37,15 @@ output <- readRDS('output/combined-output.rds') %>%
          model.flag = paste0(model,'-', flag),
          param.set = as.numeric(param.set)) %>%
   # Remove ModelU-ND and Model-D comparisons
-  filter(!(model.flag %in% c('ModelU-D','ModelU-ND'))) %>%
-  mutate(model.flag = ifelse(model == 'ModelU', model, model.flag))
+  # filter(!(model.flag %in% c('ModelU-D','ModelU-ND'))) %>%
+  mutate(model.flag = ifelse(model == 'ModelU', model, model.flag),
+         # If rerunning - could remove. Fxns are fixed
+         true.mean = case_when(parameter == 'p101' ~ 1-true.mean,
+                               parameter == 'p001' ~ 1-true.mean,
+                               parameter == 'p01' ~ 1-true.mean,
+                               .default = true.mean))
+
+  
 
 
 param.combos <- read.csv('data/parameter_combos.csv',
@@ -67,8 +74,8 @@ output %>%
   filter(parameter %in% c('psi','theta11')) %>%
   mutate(coverage = q97.5 > true.mean & true.mean > q2.5,
          parameter = factor(parameter, levels = c('theta11','psi'))) %>%
-  group_by(model.flag, nsites, nindiv, ntests, parameter) %>%
-  summarize(coverage = sum(coverage, na.rm = T)/n()) %>% 
+  summarize(coverage = sum(coverage, na.rm = T)/n(),
+            .by = c(model.flag, nsites, nindiv, ntests, parameter)) %>% 
   ggplot(aes(x=parameter, y=coverage, col=model.flag,
              shape=model.flag)) +
   geom_point(position = position_dodge(0.85), alpha = 0.6, size = 3) +
@@ -102,20 +109,22 @@ ggsave(paste0('fig2-',Sys.Date(),'.png'),
 output %>%
   mutate(coverage = q97.5 > true.mean & true.mean > q2.5,
          parameter = factor(parameter,
-                            levels = c('p01','p001','p101','p11','p111',
+                            levels = c('p01','p11','p001','p101','b3','b2','p111',
                                        'theta11','psi'))) %>%
   filter(parameter != 'deviance') %>%
-  group_by(model.flag, nsites, nindiv, ntests, parameter) %>%
-  summarize(coverage = sum(coverage, na.rm = T)/n()) %>%
+  summarize(coverage = sum(coverage, na.rm = T)/n(),
+            .by = c(model.flag, nsites, nindiv, ntests, parameter)) %>%
   ggplot(aes(x=parameter, y=coverage, col=model.flag,
              shape=model.flag)) +
   geom_point(position = position_dodge(0.85), size = 2.5, alpha = 0.7) +
   facet_grid(ntests ~ nsites + nindiv) +
-  scale_x_discrete(labels = c(expression('False positive ('*p[01]*')'),
-                              expression('False positive ('*p[001]*')'),
-                              expression('False positive ('*p[101]*')'),
-                              expression('True positive ('*p[11]*')'),
-                              expression('True positive ('*p[111]*')'),
+  scale_x_discrete(labels = c(expression('Detection probability ('*p["01"]*')'),
+                              expression('Detection probability ('*p[11]*')'),
+                              expression('Detection probability ('*p["001"]*')'),
+                              expression('Detection probability ('*p[101]*')'),
+                              expression('Classification probability ('*b[3]*')'),
+                              expression('Classification probability ('*b[2]*')'),
+                              expression('Detection probability ('*p[111]*')'),
                               expression('Prevalence ('*theta[11]*')'),
                               expression('Occupancy ('*psi*')'))) +
   scale_y_continuous(breaks = seq(0, 1, by=0.2)) +
@@ -144,21 +153,23 @@ ggsave(paste0('figS1-',Sys.Date(),'.png'),
 # Figure S2 ---------------------------------------------------------------
 output %>%
   mutate(parameter = factor(parameter,
-                            levels = c('p01','p001','p101','p11','p111',
+                            levels = c('p01','p11','p001','p101','b3','b2','p111',
                                        'theta11','psi')),
          converge = ifelse(Rhat < 1.1, 1, 0)) %>%
   filter(parameter != 'deviance') %>% 
-  group_by(model.flag, nsites, nindiv, ntests, parameter) %>%
-  summarize(converge = sum(converge, na.rm = T)) %>%
+  summarize(converge = sum(converge, na.rm = T),
+            .by = c(model.flag, nsites, nindiv, ntests, parameter)) %>%
   ggplot(aes(x=parameter, y=converge, col=model.flag,
              shape=model.flag)) +
   geom_point(position = position_dodge(0.85), size = 2.5, alpha = 0.7) +
   facet_grid(ntests ~ nsites + nindiv) +
-  scale_x_discrete(labels = c(expression('False positive ('*p[01]*')'),
-                              expression('False positive ('*p[001]*')'),
-                              expression('False positive ('*p[101]*')'),
-                              expression('True positive ('*p[11]*')'),
-                              expression('True positive ('*p[111]*')'),
+  scale_x_discrete(labels = c(expression('Detection probability ('*p["01"]*')'),
+                              expression('Detection probability ('*p[11]*')'),
+                              expression('Detection probability ('*p["001"]*')'),
+                              expression('Detection probability ('*p[101]*')'),
+                              expression('Classification probability ('*b[3]*')'),
+                              expression('Classification probability ('*b[2]*')'),
+                              expression('Detection probability ('*p[111]*')'),
                               expression('Prevalence ('*theta[11]*')'),
                               expression('Occupancy ('*psi*')'))) +
   scale_color_manual(name='', values = col.values) +
@@ -193,8 +204,8 @@ output %>%
                           breaks = seq(0,1, by=0.1),
                           right = F),
          coverage = q97.5 > true.mean & true.mean > q2.5) %>%
-  group_by(model.flag, nsites, nindiv, ntests, psi.factor) %>% 
-  summarize(coverage = sum(coverage, na.rm = T)/n()) %>%
+  summarize(coverage = sum(coverage, na.rm = T)/n(),
+            .by = c(model.flag, nsites, nindiv, ntests, psi.factor)) %>%
   ggplot() +
   geom_jitter(aes(x = psi.factor, y = coverage,
                   col = model.flag, shape = model.flag),
@@ -202,7 +213,7 @@ output %>%
   scale_color_manual(name='', values = col.values) +
   scale_shape_manual(name='', values = shape.values) +
   facet_grid(ntests ~ nsites + nindiv) +
-  labs(x = expression('Occupancy ('*psi*')'), y = '% Coverage', color = 'Model', fill = 'Model') +
+  labs(x = expression('Occupancy ('*psi*')'), y = '% Coverage', color = 'Model') +
   coord_flip() +
   theme_bw() +
   theme(axis.title.x = element_text(size = 10),
@@ -229,8 +240,8 @@ output %>%
                               breaks = seq(0,1, by=0.1),
                               right = F),
          coverage = q97.5 > true.mean & true.mean > q2.5) %>%
-  group_by(model.flag, nsites, nindiv, ntests, theta11.factor) %>%
-  summarize(coverage = sum(coverage, na.rm = T)/n()) %>%
+  summarize(coverage = sum(coverage, na.rm = T)/n(),
+            .by = c(model.flag, nsites, nindiv, ntests, theta11.factor)) %>%
   ggplot() +
   geom_jitter(aes(x = theta11.factor, y = coverage,
                   col = model.flag, shape = model.flag),
@@ -239,7 +250,7 @@ output %>%
   scale_shape_manual(name='', values = shape.values) +
   facet_grid(ntests ~ nsites + nindiv) +
   labs(x = expression('Prevalence ('*theta[11]*')'), 
-       y = '% Coverage', color = 'Model', fill = 'Model') +
+       y = '% Coverage', color = 'Model') +
   coord_flip() +
   theme_bw() +
   theme(axis.title.x = element_text(size = 10),

@@ -1,8 +1,3 @@
-## ---------------------------
-## This code was written by: r.o. mummah
-## For questions: rmummah@umass.edu
-## Date Created: 2023-02-27
-## ---------------------------
 
 ## ---------------------------
 ## Objective:
@@ -56,7 +51,6 @@ modelU <- function(i, input.data, param.combos, flag) {
 
   # Initial conditions for latent state z, latent state w, and parameters
   inits <- function() {list(z = zinit,
-                            # w = winit,
                             psi = runif(1,0,1),
                             theta11 = runif(1,0,1),
                             p111 = runif(1,x$delta,1),
