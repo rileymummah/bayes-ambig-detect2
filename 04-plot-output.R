@@ -744,7 +744,7 @@ ggplot(tmp) +
 # To save other sample size combos, comment out the filtering above and save the error.theta11 figure.
 
 
-cowplot::plot_grid(error.psi, error.theta11)
+cowplot::plot_grid(error.psi, error.theta11, labels = 'AUTO')
 
 ggsave(paste0('fig4-',Sys.Date(),'.png'),
        width = 11, height = 4, units = 'in',
