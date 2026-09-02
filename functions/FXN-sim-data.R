@@ -43,7 +43,7 @@ sim.data <- function(nsites, nindiv, ntests,
   
   # Simulate true occurrence at each site
   # set.seed(22920)
-  z <- rbinom(nsites, 1, p = psi)
+  z <- rbinom(nsites, 1, prob = psi)
   
   # Simulate true status of individuals at each site
   # Restrict w to 0 when z=0
@@ -51,7 +51,7 @@ sim.data <- function(nsites, nindiv, ntests,
     if (z[i] == 0) {
       w[i,] <- 0
     } else {
-      w[i,] <- rbinom(nindiv, 1, p = (z[i]*theta11))
+      w[i,] <- rbinom(nindiv, 1, prob = (z[i]*theta11))
     }
     
   }
