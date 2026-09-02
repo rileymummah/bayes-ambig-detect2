@@ -10,4 +10,4 @@
 
 ### Folder 1: figures
 
-- Contains Figures 2-4 and Figures S1-S17
+- Contains Figures 3-5 and Figures S1-S19
