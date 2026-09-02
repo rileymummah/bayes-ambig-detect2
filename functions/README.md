@@ -2,7 +2,7 @@
 
 ### File 1: FXN-model1.R
 
-*Description:*
+*Description:* A function to fit a model where only state-dependent false negatives and positives are possible 
 
 *Data inputs:* N/A
 
@@ -10,7 +10,7 @@
 
 ### File 2: FXN-model2.R
 
-*Description:*
+*Description:* A function to fit a model where only state-independent false negatives and positives are possible 
 
 *Data inputs:* N/A
 
@@ -18,7 +18,7 @@
 
 ### File 3: FXN-model3.R
 
-*Description:*
+*Description:* A function to fit a model where only diagnostic misclassification is possible
 
 *Data inputs:* N/A
 
@@ -26,7 +26,7 @@
 
 ### File 4: FXN-modelU.R
 
-*Description:*
+*Description:* A function to fit a model where all misclassification types are possible
 
 *Data inputs:* N/A
 
@@ -44,10 +44,9 @@
 - `psi` = true site occupancy
 - `theta11` = true site prevalence
 - `theta01` = individual contamination rate (assumed not to occur)
-- `p111` = true positive (sample-level)
-- `p101` = sample-level false positive
-- `p001` = sample- and site-level false positive
-- `p011` = site-level false positive (assumed not to occur)
+- `p111` = detection probability | pathogen at site & individual
+- `b2` = classification probability | pathogen at site but not individual
+- `b3` = classification probability | pathogen not at site & individual
 - `delta` = diagnostic test sensitivity
 - `r` = diagnostic test specificity
 
