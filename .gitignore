@@ -5,15 +5,15 @@
 *.Rproj
 *.Rmd
 
-
-# folders
-case-study/
-simulation-study/
-
 #output/combined-*.csv
 outfiles/
 output/HPC/
 output/combined-output.csv
 
 # files
-simulation-study/03-fit-models/HPC/UNITY-help.txt
+rerun.csv
+rerun.sh
+run-single-check.R
+run-single.R
+run-single.sh
+summarize-Us.R
