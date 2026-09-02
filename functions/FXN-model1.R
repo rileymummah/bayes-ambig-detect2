@@ -92,8 +92,8 @@ model1 <- function(i, input.data, param.combos, flag) {
             true.mean = c(param.combos$psi[i],
                           param.combos$theta11[i],
                           param.combos$delta[i],
-                          1-param.combos$r[i],
-                          1-param.combos$r[i],
+                          (1-param.combos$r[i]),
+                          (1-param.combos$r[i]),
                           NA),
             out$summary) %>%
     mutate(runtime = time,

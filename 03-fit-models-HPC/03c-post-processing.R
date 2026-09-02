@@ -52,11 +52,11 @@ filter(data, parameter != 'deviance') -> data
 # Check that there are equal numbers (divisible by 12000) across models/datasets
 table(data$model, data$flag)
 
-# # Check that each model has the correct number of entries
-# # ModelU should have 5 parameter x adjustment combos
-# # Model1 should have 9 parameter x adjustment combos
-# # Model2 should have 12 parameter x adjustment combos
-# # Model3 should have 6 parameter x adjustment combos
+## Check that each model has the correct number of entries
+## ModelU should have 5 parameter x adjustment combos
+## Model1 should have 9 parameter x adjustment combos
+## Model2 should have 12 parameter x adjustment combos
+## Model3 should have 6 parameter x adjustment combos
 table(data$dataset, data$model) %>%
   as.data.frame() -> tmp
 
@@ -84,7 +84,7 @@ data %>%
   left_join(., param.combos[,c('rowname','nsites','nindiv','ntests')],
             by=c('param.set'='rowname')) %>%
   # Calculate some metrics
-  mutate(acc = mean - true.mean,
+  mutate(bias = mean - true.mean,
          bci.width = q97.5 - q2.5,
          nsites = factor(nsites,
                          levels = c(20, 100),
