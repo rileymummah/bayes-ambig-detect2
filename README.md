@@ -18,8 +18,8 @@ To recreate the simulation study run the following files:
   
   **01-generate-parameter-combos.R**
   
-  - Sets the limits on $\psi$, $\theta_{11}$, $p_{111}$, $p_{101}$, and
-$p_{100}$
+  - Sets the limits on $\psi$, $\theta_{11}$, $p_{111}$, $b_2$, and
+$b_3$
   - Uses Latin hypercube sampling to create parameter sets
 - Writes parameter combinations to `data/parameter_combos.csv`
 
@@ -51,5 +51,5 @@ saved as `combined-output.rds` and `combined-output.csv`.
 **04-plot-output.R**
   
   - Loads the simulation output `output/combined-output.rds`
-- Creates and saves Figures 2-4 and S1-S17 to `output/figures/`
+- Creates and saves Figures 3-5 and S1-S19 to `output/figures/`
 
